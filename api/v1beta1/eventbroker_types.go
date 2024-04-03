@@ -20,6 +20,7 @@ import (
 	"encoding/json"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
 )
 
 // EventBrokerSpec defines the desired state of PubSubPlusEventBroker
@@ -39,6 +40,8 @@ type EventBrokerSpec struct {
 	Developer bool `json:"developer"`
 	//+optional
 	//+kubebuilder:validation:Type:=object
+	//+kubebuilder:pruning:PreserveUnknownFields
+	//+kubebuilder:validation:Schemaless
 	//+operator-sdk:csv:customresourcedefinitions:type=spec,order=3
 	// SystemScaling provides exact fine-grained specification of the event broker scaling parameters
 	// and the assigned CPU / memory resources to the Pod.
@@ -214,6 +217,7 @@ type BrokerPersistentVolumeClaim struct {
 	ClaimName string `json:"claimName"`
 }
 
+// +kubebuilder:pruning:PreserveUnknownFields
 type SystemScaling struct {
 	// +kubebuilder:default:=100
 	MaxConnections int `json:"maxConnections,omitempty"`
@@ -225,6 +229,8 @@ type SystemScaling struct {
 	MessagingNodeCpu string `json:"messagingNodeCpu,omitempty"`
 	// +kubebuilder:default:="4025Mi"
 	MessagingNodeMemory string `json:"messagingNodeMemory,omitempty"`
+	//+kubebuilder:pruning:PreserveUnknownFields
+	runtime.RawExtension `json:"-"`
 }
 
 // BrokerTLS defines TLS configuration for the PubSubPlusEventBroker

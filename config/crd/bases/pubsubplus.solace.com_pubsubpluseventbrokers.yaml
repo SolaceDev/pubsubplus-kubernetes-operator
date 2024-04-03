@@ -1453,23 +1453,8 @@ spec:
                 description: |-
                   SystemScaling provides exact fine-grained specification of the event broker scaling parameters
                   and the assigned CPU / memory resources to the Pod.
-                properties:
-                  maxConnections:
-                    default: 100
-                    type: integer
-                  maxQueueMessages:
-                    default: 100
-                    type: integer
-                  maxSpoolUsage:
-                    default: 1000
-                    type: integer
-                  messagingNodeCpu:
-                    default: "2"
-                    type: string
-                  messagingNodeMemory:
-                    default: 4025Mi
-                    type: string
                 type: object
+                x-kubernetes-preserve-unknown-fields: true
               timezone:
                 default: UTC
                 description: Defines the timezone for the event broker container,

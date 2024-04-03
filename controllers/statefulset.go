@@ -19,6 +19,7 @@ package controllers
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -533,6 +534,23 @@ func (r *PubSubPlusEventBrokerReconciler) updateStatefulsetForEventBroker(sts *a
 			allEnv = append(allEnv, corev1.EnvVar{
 				Name:  envV.Name,
 				Value: envV.Value,
+			})
+		}
+		sts.Spec.Template.Spec.Containers[0].Env = allEnv
+	}
+
+	//Set unknown scaling parameter values
+	if m.Spec.SystemScaling != nil {
+		var scalingParamMap map[string]interface{}
+		inrec, _ := json.Marshal(m.Spec.SystemScaling)
+		json.Unmarshal(inrec, &scalingParamMap)
+		allEnv := sts.Spec.Template.Spec.Containers[0].Env
+		for key, val := range scalingParamMap {
+			println("Adding extra scaling param key " + key)
+			println("Adding extra scaling param value " + fmt.Sprint(val))
+			allEnv = append(allEnv, corev1.EnvVar{
+				Name:  key,
+				Value: fmt.Sprint(val),
 			})
 		}
 		sts.Spec.Template.Spec.Containers[0].Env = allEnv
