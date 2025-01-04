@@ -59,7 +59,7 @@ jobs:
 
       - name: Upload Test coverage Reports
         if: ${{ startsWith(github.ref_name, 'dev1.') && (github.ref_name != 'main') }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: code-coverage-report
           path: |
@@ -183,7 +183,7 @@ jobs:
 
       - name: Uploads Trivy Scan Reports
         if: ${{ startsWith(github.ref_name, 'dev1.') && (github.ref_name != 'main') }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           path: |
             trivy-results.sarif
@@ -199,7 +199,7 @@ jobs:
 
       - name: Uploads Trivy Scan Reports
         if: ${{ startsWith(github.ref_name, 'dev1.') && (github.ref_name != 'main') }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           path: |
             trivy-results.sarif

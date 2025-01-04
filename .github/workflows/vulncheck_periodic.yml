@@ -121,7 +121,7 @@ jobs:
 
       - name: Uploads Trivy Scan Reports
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           path: |
             trivy-results.sarif
@@ -136,7 +136,7 @@ jobs:
 
       - name: Uploads Trivy Scan Reports
         if: ${{ !startsWith(github.ref_name, '1.') }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           path: |
             trivy-results.sarif
